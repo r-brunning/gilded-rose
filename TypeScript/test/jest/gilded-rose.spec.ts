@@ -37,12 +37,12 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBeLessThanOrEqual(50);
   });
 
-  it('should ensure the quality of Sulfuras, Hand of Ragnaros never decreases and does not need to be sold', () => {
-    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 10, 50)]);
+  it('should ensure the quality of Sulfuras, Hand of Ragnaros is always 80 and never decreases, and sellIn does not change', () => {
+    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 10, 80)]);
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(10);
-    expect(items[0].quality).toBe(50);
-  });
+    expect(items[0].quality).toBe(80);
+  });  
 
   it('should increase quality of Backstage passes by 2 when there are 10 days or less', () => {
     const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20)]);

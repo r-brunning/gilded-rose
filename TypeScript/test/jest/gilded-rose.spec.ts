@@ -16,4 +16,10 @@ describe('Gilded Rose', () => {
     expect(items[0].sellIn).toBe(-1);
     expect(items[0].quality).toBe(18);
   });
+
+  it('should not allow the quality of an item to be negative', () => {
+    const gildedRose = new GildedRose([new Item('normal item', 10, 0)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0); 
+  });
 });

@@ -22,4 +22,11 @@ describe('Gilded Rose', () => {
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBeGreaterThanOrEqual(0); 
   });
+
+  it('should ensure the quality of Aged Brie increases as it gets older', () => {
+    const gildedRose = new GildedRose([new Item('Aged Brie', 10, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(9);
+    expect(items[0].quality).toBeGreaterThan(20);
+  });
 });

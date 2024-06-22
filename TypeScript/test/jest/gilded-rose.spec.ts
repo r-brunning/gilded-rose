@@ -36,4 +36,11 @@ describe('Gilded Rose', () => {
     expect(items[0].sellIn).toBe(9);
     expect(items[0].quality).toBeLessThanOrEqual(50);
   });
+
+  it('should ensure the quality of Sulfuras, Hand of Ragnaros never decreases and does not need to be sold', () => {
+    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 10, 50)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(10);
+    expect(items[0].quality).toBe(50);
+  });
 });

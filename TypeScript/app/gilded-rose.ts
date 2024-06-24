@@ -19,41 +19,39 @@ export class GildedRose {
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
-
+  
   updateQuality() {
     for (const item of this.items) {
-      if (item.name === 'Sulfuras, Hand of Ragnaros') continue;
-
-      if (item.name === 'Aged Brie' || item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-        this.canIncreaseValue(item) && item.quality++;
-
-        if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-          item.sellIn < 11 && this.canIncreaseValue(item) && item.quality++;
-          item.sellIn < 6 && this.canIncreaseValue(item) && item.quality++;
-        }
-      } else {
-        this.canDecreaseValue(item) && item.quality--;
+      switch (item.name) {
+        case 'Aged Brie':
+          if (this.canIncreaseValue(item)) item.quality++;
+          if (item.sellIn <= 0 && this.canIncreaseValue(item)) item.quality++;
+          break;
+  
+        case 'Backstage passes to a TAFKAL80ETC concert':
+          if (this.canIncreaseValue(item)) item.quality++;
+          if (item.sellIn <= 10 && this.canIncreaseValue(item)) item.quality++;
+          if (item.sellIn <= 5 && this.canIncreaseValue(item)) item.quality++;
+          if (item.sellIn <= 0) item.quality = 0;
+          break;
+  
+        case 'Sulfuras, Hand of Ragnaros':
+          break;
+  
+        default:
+          if (this.canDecreaseValue(item)) item.quality--;
+          if (item.sellIn <= 0 && this.canDecreaseValue(item)) item.quality--;
+          break;
       }
-
-      item.sellIn -= 1;
-
-      if (item.sellIn < 0) {
-        if (item.name === 'Aged Brie') {
-          this.canIncreaseValue(item) && item.quality++;
-        } else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-          item.quality = 0;
-        } else if (this.canDecreaseValue(item)) {
-          item.quality--;
-        }
-      }
+      item.name !== 'Sulfuras, Hand of Ragnaros' && item.sellIn--;
     }
     return this.items;
   }
-
+  
   private canIncreaseValue(item: Item) {
     return item.quality < MAX_QUALITY;
   }
-
+  
   private canDecreaseValue(item: Item) {
     return item.quality > MIN_QUALITY;
   }

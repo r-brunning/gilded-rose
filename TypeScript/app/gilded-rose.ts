@@ -1,5 +1,4 @@
-import { handleAgedBrie, handleBackstagePasses, handleConjuredItems, handleNormalItems } from './itemsUtils';
-
+import { handleAgedBrie, handleBackstagePasses, handleConjuredItems, handleNormalItems, AGED_BRIE, BACKSTAGE_PASSES, SULFURAS, CONJURED_PREFIX } from './itemsUtils';
 export class Item {
   name: string;
   sellIn: number;
@@ -22,22 +21,22 @@ export class GildedRose {
   updateQuality() {
     for (const item of this.items) {
       switch (item.name) {
-        case 'Aged Brie':
+        case AGED_BRIE:
           handleAgedBrie(item);
           break;
 
-        case 'Backstage passes to a TAFKAL80ETC concert':
+        case BACKSTAGE_PASSES:
           handleBackstagePasses(item);
           break;
 
-        case 'Sulfuras, Hand of Ragnaros':
+        case SULFURAS:
           break;
 
         default:
-          item.name.startsWith('Conjured') ? handleConjuredItems(item) : handleNormalItems(item);
+          item.name.startsWith(CONJURED_PREFIX) ? handleConjuredItems(item) : handleNormalItems(item);
           break;
       }
-      item.name !== 'Sulfuras, Hand of Ragnaros' && item.sellIn--;
+      item.name !== SULFURAS && item.sellIn--;
     }
     return this.items;
   }

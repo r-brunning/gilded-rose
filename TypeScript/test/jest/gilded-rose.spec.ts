@@ -1,6 +1,21 @@
 import { Item, GildedRose } from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
+
+  it('should initialize with an empty list of items', () => {
+    const gildedRose = new GildedRose();
+    expect(gildedRose.items).toEqual([]);
+  });
+
+  it('should initialize with a given list of items', () => {
+    const items = [
+      new Item('Aged Brie', 10, 20),
+      new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20)
+    ];
+    const gildedRose = new GildedRose(items);
+    expect(gildedRose.items).toEqual(items);
+  });
+
   it('should decrease sellIn and quality for normal items by one', () => {
     const gildedRose = new GildedRose([new Item('normal item', 10, 20)]);
     const items = gildedRose.updateQuality();

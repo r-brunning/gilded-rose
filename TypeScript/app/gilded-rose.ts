@@ -1,4 +1,4 @@
-import { handleAgedBrie, handleBackstagePasses, handleNormalItems } from './itemsUtils';
+import { handleAgedBrie, handleBackstagePasses, handleConjuredItems, handleNormalItems } from './itemsUtils';
 
 export class Item {
   name: string;
@@ -34,7 +34,7 @@ export class GildedRose {
           break;
 
         default:
-          handleNormalItems(item);
+          item.name.startsWith('Conjured') ? handleConjuredItems(item) : handleNormalItems(item);
           break;
       }
       item.name !== 'Sulfuras, Hand of Ragnaros' && item.sellIn--;

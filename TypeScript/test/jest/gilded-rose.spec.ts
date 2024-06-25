@@ -64,4 +64,18 @@ describe('Gilded Rose', () => {
     expect(items[0].sellIn).toBe(-1);
     expect(items[0].quality).toBe(0);
   });
+
+  it('should ensure Conjured items degrade in quality by 2 before the expiry date is passed', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 20, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(19);
+    expect(items[0].quality).toBe(8);
+  });
+
+  it('should ensure Conjured items degrade in quality by 4 after the expiry date is passed', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 0, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[0].quality).toBe(6);
+  });
 });

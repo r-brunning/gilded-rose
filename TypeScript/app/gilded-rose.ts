@@ -17,23 +17,27 @@ export class GildedRose {
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
-
+  
   updateQuality() {
     for (const item of this.items) {
-      switch (item.name) {
-        case AGED_BRIE:
+      switch (true) {
+        case item.name === AGED_BRIE:
           handleAgedBrie(item);
           break;
-
-        case BACKSTAGE_PASSES:
+  
+        case item.name === BACKSTAGE_PASSES:
           handleBackstagePasses(item);
           break;
-
-        case SULFURAS:
+  
+        case item.name === SULFURAS:
           break;
-
+  
+        case item.name.startsWith(CONJURED_PREFIX):
+          handleConjuredItems(item);
+          break;
+  
         default:
-          item.name.startsWith(CONJURED_PREFIX) ? handleConjuredItems(item) : handleNormalItems(item);
+          handleNormalItems(item);
           break;
       }
       item.name !== SULFURAS && item.sellIn--;
